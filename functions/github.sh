@@ -26,6 +26,11 @@ function m2-create-project() {
     local RELEASE="$3"
 
     echo "Creating a new M2 project...  "
+
+    if [ -z "$PROJECT" ]; then
+        error-exit "  ==> Failed, missing 1st argument (project name)"
+    fi
+
     echo -n "  ==> Validating Magento version... "
     validate-magento-version $VERSION || error-exit "Failed, please specify 'community-edition' or 'enterprise-edition'"
 }
