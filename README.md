@@ -16,11 +16,11 @@ Is the 2nd brightest star in the northern hemisphere and provides helpful script
 ## Commands
 Each command can use tab to auto complete, which is either an [alias](http://www.tldp.org/LDP/abs/html/aliases.html) (a keyboard shortcut) or a bash function.
 
-Command | Example   | Description
---- | --- | ---
-`bash-reload` |  | Reload ~/.bash_profile
-`q` |  | Change directory to /var/www
-`m2-create-project <project> <version> <release>` | `m2-create-project CE 2.1.3` | Create a new M2 project
+Command | Description
+--- | ---
+`bash-reload` | Reload ~/.bash_profile
+`q` | Change directory to /var/www
+`m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
 
 ## Run Tests
 Bash units are tested with [Bats](https://github.com/sstephenson/bats) by running:
