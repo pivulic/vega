@@ -5,6 +5,10 @@ function error-exit() {
     kill -INT $$
 }
 
+function return-false() {
+    return 1
+}
+
 function to-lower-case() {
     local STRING="$1"
     echo "$STRING" | awk '{print tolower($0)}'

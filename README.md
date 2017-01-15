@@ -16,9 +16,13 @@ Is the 2nd brightest star in the northern hemisphere and provides helpful script
 ## Commands
 Each command can use tab to auto complete, which is either an [alias](http://www.tldp.org/LDP/abs/html/aliases.html) (a keyboard shortcut) or a bash function.
 
+Some of these scripts requires [Docker](https://www.docker.com/) to be installed.
+
 Command | Description
 --- | ---
 `bash-reload` | Reload ~/.bash_profile
+`d-composer` | Run Composer through the [Composer container](https://hub.docker.com/r/library/composer/)
+`dinghy-env` | Set [Dinghy](https://github.com/codekitchen/dinghy) environment variables
 `m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
 `q` | Change directory to /var/www
 
