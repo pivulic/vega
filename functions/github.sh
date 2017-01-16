@@ -20,18 +20,30 @@ function validate-magento-version() {
     esac
 }
 
-function validate-github-username() {
-    local GITHUB_USERNAME="$1"
+function get-github-username() {
+    GITHUB_USERNAME=$(git config github.user)
     if [ -z "$GITHUB_USERNAME" ]; then
         return-false
+    else
+        echo $GITHUB_USERNAME
     fi
 }
 
-function validate-github-token() {
-    local GITHUB_TOKEN="$1"
+function get-github-token() {
+    GITHUB_TOKEN=$(git config github.token)
     if [ -z "$GITHUB_TOKEN" ]; then
         return-false
+    else
+        echo $GITHUB_TOKEN
     fi
+}
+
+function validate-github-credentials() {
+    local GITHUB_USERNAME="$1"
+    local GITHUB_TOKEN="$2"
+
+    RESPONSE="$(curl --silent --user $GITHUB_USERNAME:$GITHUB_TOKEN https://api.github.com/user)"
+    is-string-in-variable "$GITHUB_USERNAME" "$RESPONSE" || return-false
 }
 
 function create-github-repository() {
@@ -52,10 +64,9 @@ function m2-create-project() {
     fi
 
     echo -n "  ==> Validating Github credentials... "
-    GITHUB_USERNAME=$(git config github.user)
-    GITHUB_TOKEN=$(git config github.token)
-    validate-github-username $GITHUB_USERNAME || error-exit "Failed, run 'git config --global github.user <username>'"
-    validate-github-token $GITHUB_TOKEN || error-exit "Failed, run 'git config --global github.token <token>'"
+    GITHUB_USERNAME=$(get-github-username) || error-exit "Failed, run 'git config --global github.user <username>'"
+    GITHUB_TOKEN=$(get-github-token) || error-exit "Failed, run 'git config --global github.token <token>'"
+    validate-github-credentials $GITHUB_USERNAME $GITHUB_TOKEN || error-exit "Failed, incorrect credentials"
     echo "OK"
 
     echo -n "  ==> Creating Github repository... "
@@ -67,5 +78,4 @@ function m2-create-project() {
 
     REPOSITORY_URL='https://repo.magento.com/'
     d-composer create-project --ignore-platform-reqs --no-scripts --repository-url=$REPOSITORY_URL magento/project-$VERSION=$RELEASE
-
 }
