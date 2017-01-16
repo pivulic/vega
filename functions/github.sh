@@ -94,8 +94,9 @@ function m2-create-project() {
 
     echo -n "  ==> Creating M2/Composer project... "
     CONTAINER_NAME='composer'
+    REPOSITORY_URL='https://repo.magento.com/'
     d-composer create-project --ignore-platform-reqs --no-scripts --repository-url=$REPOSITORY_URL magento/project-$VERSION=$RELEASE || error-exit "Failed, could not install composer"
-    docker cp $CONTAINER_NAME:/app/project-community-edition . || error-exit "Failed, could not copy container volume to host'"
+    docker cp $CONTAINER_NAME:/app/project-$VERSION . || error-exit "Failed, could not copy container volume to host'"
     remove-container $CONTAINER_NAME || error-exit "Failed, could not remove composer container"
     echo "OK"
 }
