@@ -1,6 +1,7 @@
 #!/bin/sh
 
 BASE=$(dirname $BASH_SOURCE[0])
+source ${BASE}/docker.sh
 source ${BASE}/utils.sh
 
 function validate-magento-version() {
@@ -84,12 +85,17 @@ function m2-create-project() {
     echo "OK"
 
     echo -n "  ==> Validating Magento version... "
-    validate-magento-version $VERSION || error-exit "Failed, please specify 'community-edition' or 'enterprise-edition'"
+    VERSION=$(validate-magento-version $VERSION) || error-exit "Failed, specify 'community-edition' or 'enterprise-edition'"
+    echo "OK"
 
     echo -n "  ==> Creating Github repository... "
     create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $PROJECT || error-exit "Failed, could not create repo'"
     echo "OK"
 
-    REPOSITORY_URL='https://repo.magento.com/'
-    d-composer create-project --ignore-platform-reqs --no-scripts --repository-url=$REPOSITORY_URL magento/project-$VERSION=$RELEASE
+    echo -n "  ==> Creating M2/Composer project... "
+    CONTAINER_NAME='composer'
+    d-composer create-project --ignore-platform-reqs --no-scripts --repository-url=$REPOSITORY_URL magento/project-$VERSION=$RELEASE || error-exit "Failed, could not install composer"
+    docker cp $CONTAINER_NAME:/app/project-community-edition . || error-exit "Failed, could not copy container volume to host'"
+    remove-container $CONTAINER_NAME || error-exit "Failed, could not remove composer container"
+    echo "OK"
 }
