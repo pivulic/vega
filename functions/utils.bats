@@ -2,6 +2,16 @@
 
 load $(pwd)/functions/utils.sh
 
+@test "Test return-true() should pass - if status is 0" {
+    run return-true
+    [ $status = 0 ]
+}
+
+@test "Test return-false() should pass - if status is 1" {
+    run return-false
+    [ $status = 1 ]
+}
+
 @test "Test to-lower-case() should return 'a string' - if string is 'A String'" {
     local STRING="A String"
     run to-lower-case "$STRING"

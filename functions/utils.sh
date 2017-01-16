@@ -5,12 +5,12 @@ function error-exit() {
     kill -INT $$
 }
 
-function return-false() {
-    return 1
-}
-
 function return-true() {
     return 0
+}
+
+function return-false() {
+    return 1
 }
 
 function to-lower-case() {
