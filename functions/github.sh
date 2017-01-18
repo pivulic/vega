@@ -56,6 +56,16 @@ function is-github-repo() {
     fi
 }
 
+function get-github-file() {
+    local GITHUB_TOKEN="$1"
+    local ORGANIZATION="$2"
+    local REPO="$3"
+    local BRANCH="$4"
+    local FILE_PATH="$5"
+
+    curl -H "Authorization: token $GITHUB_TOKEN" -o docker-compose.yml https://raw.githubusercontent.com/$ORGANIZATION/$REPO/$BRANCH/$FILE_PATH &>/dev/null
+}
+
 function create-github-repository() {
     local GITHUB_USERNAME="$1"
     local GITHUB_TOKEN="$2"
@@ -86,6 +96,12 @@ function m2-create-project() {
 
     echo -n "  ==> Validating Magento version... "
     VERSION=$(validate-magento-version $VERSION) || error-exit "Failed, specify 'community-edition' or 'enterprise-edition'"
+    echo "OK"
+
+    echo -n "  ==> Copying m2-clean/docker* files from GitHub... "
+    curl -H "Authorization: token $GITHUB_TOKEN" -o docker-compose.yml "https://raw.githubusercontent.com/$ORGANIZATION/m2-clean/master/docker-compose.yml" &>/dev/null
+    curl -H "Authorization: token $GITHUB_TOKEN" -o docker-cloud.yml "https://raw.githubusercontent.com/$ORGANIZATION/m2-clean/master/docker-cloud.yml" &>/dev/null || error-exit "Failed, could not fetch remote file"
+    curl -H "Authorization: token $GITHUB_TOKEN" -o .env "https://raw.githubusercontent.com/$ORGANIZATION/m2-clean/master/.env" &>/dev/null || error-exit "Failed, could not fetch remote file"
     echo "OK"
 
     echo -n "  ==> Creating M2/Composer project... "
