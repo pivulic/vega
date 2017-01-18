@@ -111,4 +111,8 @@ function m2-create-project() {
     git remote add origin git@github.com:$ORGANIZATION/$PROJECT.git &>/dev/null || error-exit "Failed, could not set repository origin"
     git push -u origin master &>/dev/null || error-exit "Failed, could not push to repository"
     echo "OK"
+
+    echo "The new repositories are:"
+    echo "  ==> https://github.com/$ORGANIZATION/$PROJECT"
+    echo "DONE"
 }
