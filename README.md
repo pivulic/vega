@@ -25,6 +25,7 @@ Command | Description
 `dinghy-env` | Set [Dinghy](https://github.com/codekitchen/dinghy) environment variables
 `m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
 `q` | Change directory to /var/www
+`vega-update` | Update this repository to latest version
 
 ## Run Tests
 Bash units are tested with [Bats](https://github.com/sstephenson/bats) by running:

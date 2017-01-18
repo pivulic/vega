@@ -88,15 +88,27 @@ function m2-create-project() {
     VERSION=$(validate-magento-version $VERSION) || error-exit "Failed, specify 'community-edition' or 'enterprise-edition'"
     echo "OK"
 
-    echo -n "  ==> Creating Github repository... "
-    create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $PROJECT || error-exit "Failed, could not create repo'"
-    echo "OK"
-
     echo -n "  ==> Creating M2/Composer project... "
     CONTAINER_NAME='composer'
     REPOSITORY_URL='https://repo.magento.com/'
     d-composer create-project --ignore-platform-reqs --no-scripts --repository-url=$REPOSITORY_URL magento/project-$VERSION=$RELEASE || error-exit "Failed, could not install composer"
-    docker cp $CONTAINER_NAME:/app/project-$VERSION . || error-exit "Failed, could not copy container volume to host'"
+    echo "OK"
+
+    echo -n "  ==> Copying composer.* files from container... "
+    docker cp $CONTAINER_NAME:/app/project-$VERSION/composer.json . || error-exit "Failed, could not copy composer.json to host'"
+    docker cp $CONTAINER_NAME:/app/project-$VERSION/composer.lock . || error-exit "Failed, could not copy composer.lock to host'"
     remove-container $CONTAINER_NAME || error-exit "Failed, could not remove composer container"
+    echo "OK"
+
+    echo -n "  ==> Creating GitHub repository... "
+    create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $PROJECT || error-exit "Failed, could not create repo'"
+    echo "OK"
+
+    echo -n "  ==> Adding files to GitHub repository... "
+    git init &>/dev/null || error-exit "Failed, could not initialize git"
+    git add . &>/dev/null || error-exit "Failed, could not add files to git"
+    git commit -m 'Initial commit' &>/dev/null || error-exit "Failed, could not commit to git"
+    git remote add origin git@github.com:$ORGANIZATION/$PROJECT.git &>/dev/null || error-exit "Failed, could not set repository origin"
+    git push -u origin master &>/dev/null || error-exit "Failed, could not push to repository"
     echo "OK"
 }
