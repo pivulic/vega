@@ -2,7 +2,9 @@
 
 BASE=$(dirname $BASH_SOURCE[0])
 source ${BASE}/docker.sh
-source ${BASE}/utils.sh
+source ${BASE}/utils/files.sh
+source ${BASE}/utils/returns.sh
+source ${BASE}/utils/strings.sh
 
 function validate-magento-version() {
     local VERSION="$1"
@@ -82,6 +84,15 @@ function m2-create-project() {
     echo "Creating a new M2 project...  "
     if [ -z "$PROJECT" ]; then
         error-exit "  ==> Failed, missing 1st argument (project name)"
+    fi
+
+    echo -n "  ==> Validating the project name... "
+    PREFIX="m2-"
+    if ! has-variable-prefix $PROJECT $PREFIX; then
+        PROJECT="${PREFIX}${PROJECT}"
+        echo "project name changed to: $PROJECT"
+    else
+        echo "OK"
     fi
 
     echo -n "  ==> Validating GitHub credentials... "

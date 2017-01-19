@@ -1,16 +1,6 @@
 #!/usr/bin/env bats
 
-load $(pwd)/functions/utils.sh
-
-@test "Test return-true() should pass - if status is 0" {
-    run return-true
-    [ $status = 0 ]
-}
-
-@test "Test return-false() should pass - if status is 1" {
-    run return-false
-    [ $status = 1 ]
-}
+load $(pwd)/functions/utils/strings.sh
 
 @test "Test to-lower-case() should return 'a string' - if string is 'A String'" {
     local STRING="A String"
@@ -32,14 +22,16 @@ load $(pwd)/functions/utils.sh
     [ $status = 1 ]
 }
 
-@test "Test get-file-name-from-path() should return 'php.ini' - if string is 'web/conf/php.ini'" {
-    local FILE_PATH="web/conf/php.ini"
-    run get-file-name-from-path "$FILE_PATH"
-    [ "$output" == "php.ini" ]
+@test "Test has-variable-prefix() should pass - if variable starts with prefix \"m2-\"" {
+    local VARIABLE="m2-ikea"
+    local PREFIX="m2-"
+    run has-variable-prefix "$VARIABLE" "$PREFIX"
+    [ $status = 0 ]
 }
 
-@test "Test get-file-name-from-path() should return 'docker-compose.yml' - if string is 'docker-compose.yml'" {
-    local FILE_PATH="docker-compose.yml"
-    run get-file-name-from-path "$FILE_PATH"
-    [ "$output" == "docker-compose.yml" ]
+@test "Test has-variable-prefix() should fail - if variable doesn't starts with prefix \"m2-\"" {
+    local VARIABLE="super-m2-ikea"
+    local PREFIX="m2-"
+    run has-variable-prefix "$VARIABLE" "$PREFIX"
+    [ $status = 1 ]
 }
