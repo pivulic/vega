@@ -103,6 +103,7 @@ function m2-create-project() {
     M2_CLEAN_FILES=( "docker-compose.yml" "docker-cloud.yml" ".env" )
     for FILE in "${M2_CLEAN_FILES[@]}"; do
         get-github-file $GITHUB_TOKEN $ORGANIZATION "m2-clean" "master" $FILE || error-exit "Failed, could not fetch remote $FILE"
+        replace-string-in-file $FILE "m2-clean" $PROJECT || error-exit "Failed, could not replace \"clean\" with \"$PROJECT\" in $FILE"
     done
     echo "OK"
 
