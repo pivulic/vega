@@ -63,7 +63,8 @@ function get-github-file() {
     local BRANCH="$4"
     local FILE_PATH="$5"
 
-    curl -H "Authorization: token $GITHUB_TOKEN" -o docker-compose.yml https://raw.githubusercontent.com/$ORGANIZATION/$REPO/$BRANCH/$FILE_PATH &>/dev/null
+    FILE_NAME=$(get-file-name-from-path $FILE_PATH)
+    curl -H "Authorization: token $GITHUB_TOKEN" -o $FILE_NAME https://raw.githubusercontent.com/$ORGANIZATION/$REPO/$BRANCH/$FILE_PATH &>/dev/null
 }
 
 function create-github-repository() {
@@ -99,9 +100,10 @@ function m2-create-project() {
     echo "OK"
 
     echo -n "  ==> Copying m2-clean/docker* files from GitHub... "
-    curl -H "Authorization: token $GITHUB_TOKEN" -o docker-compose.yml "https://raw.githubusercontent.com/$ORGANIZATION/m2-clean/master/docker-compose.yml" &>/dev/null
-    curl -H "Authorization: token $GITHUB_TOKEN" -o docker-cloud.yml "https://raw.githubusercontent.com/$ORGANIZATION/m2-clean/master/docker-cloud.yml" &>/dev/null || error-exit "Failed, could not fetch remote file"
-    curl -H "Authorization: token $GITHUB_TOKEN" -o .env "https://raw.githubusercontent.com/$ORGANIZATION/m2-clean/master/.env" &>/dev/null || error-exit "Failed, could not fetch remote file"
+    M2_CLEAN_FILES=( "docker-compose.yml" "docker-cloud.yml" ".env" )
+    for FILE in "${M2_CLEAN_FILES[@]}"; do
+        get-github-file $GITHUB_TOKEN $ORGANIZATION "m2-clean" "master" $FILE || error-exit "Failed, could not fetch remote $FILE"
+    done
     echo "OK"
 
     echo -n "  ==> Creating M2/Composer project... "

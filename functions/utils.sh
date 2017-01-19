@@ -28,3 +28,8 @@ function is-string-in-variable() {
         return-false
     fi
 }
+
+function get-file-name-from-path() {
+    local FILE_PATH="$1"
+    basename $FILE_PATH
+}
