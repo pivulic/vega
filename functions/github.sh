@@ -72,14 +72,16 @@ function get-github-file() {
 function create-github-repository() {
     local GITHUB_USERNAME="$1"
     local GITHUB_TOKEN="$2"
-    local PROJECT="$3"
-    curl --user "$GITHUB_USERNAME:$GITHUB_TOKEN" https://api.github.com/user/repos -d '{"name":"'$PROJECT'", "private":"true"}' &>/dev/null
+    local REPO_NAME="$3"
+    curl --user "$GITHUB_USERNAME:$GITHUB_TOKEN" https://api.github.com/user/repos -d '{"name":"'$REPO_NAME'", "private":"true"}' &>/dev/null
 }
 
 function m2-create-project() {
     local PROJECT="$1"
     local VERSION="$2"
     local RELEASE="$3"
+    local M2_CLEAN="m2-clean"
+    local M2_CLEAN_WEB="m2-clean-web"
 
     echo "Creating a new M2 project...  "
     if [ -z "$PROJECT" ]; then
@@ -95,26 +97,56 @@ function m2-create-project() {
         echo "OK"
     fi
 
+    echo -n "  ==> Validating current directory... "
+    [ "$PWD" == "/var/www" ] || error-exit "Failed, please change directory: cd /var/www/"
+    echo "OK"
+
+    echo -n "  ==> Validating that local directories don't exist... "
+    WEB_REPO="$PROJECT-web"
+    PROJECT_PATH="$PWD/$PROJECT"
+    WEB_REPO_PATH="$PWD/$WEB_REPO"
+    [ -d $PROJECT_PATH ] && error-exit "Failed, $PROJECT_PATH exists"
+    [ -d $WEB_REPO_PATH ] && error-exit "Failed, $WEB_REPO_PATH exists"
+    echo "OK"
+
     echo -n "  ==> Validating GitHub credentials... "
     GITHUB_USERNAME=$(get-github-username) || error-exit "Failed, run 'git config --global github.user <username>'"
     GITHUB_TOKEN=$(get-github-token) || error-exit "Failed, run 'git config --global github.token <token>'"
     validate-github-credentials $GITHUB_USERNAME $GITHUB_TOKEN || error-exit "Failed, incorrect credentials"
     echo "OK"
 
-    echo -n "  ==> Validating that GitHub repository doesn't exist... "
+    echo -n "  ==> Validating that GitHub repositories don't exist... "
     ORGANIZATION="pivulic"
     is-github-repo $ORGANIZATION $PROJECT && error-exit "Failed, https://github.com/$ORGANIZATION/$PROJECT already exist"
+    is-github-repo $ORGANIZATION $WEB_REPO && error-exit "Failed, https://github.com/$ORGANIZATION/$WEB_REPO already exist"
     echo "OK"
 
     echo -n "  ==> Validating Magento version... "
-    VERSION=$(validate-magento-version $VERSION) || error-exit "Failed, specify 'community-edition' or 'enterprise-edition'"
+    VERSION=$(validate-magento-version $VERSION) || error-exit "Failed, please specify 'community-edition' or 'enterprise-edition'"
     echo "OK"
 
-    echo -n "  ==> Copying m2-clean/docker* files from GitHub... "
+    echo -n "  ==> Cloning https://github.com/$ORGANIZATION/$M2_CLEAN_WEB to https://github.com/$ORGANIZATION/$WEB_REPO... "
+    git clone "git@github.com:$ORGANIZATION/$M2_CLEAN_WEB.git" $WEB_REPO &>/dev/null || error-exit "Failed, could not clone"
+    cd $WEB_REPO_PATH &>/dev/null || error-exit "Failed, could not change directory to $WEB_REPO_PATH"
+    rm -rf .git || error-exit "Failed, could not remove $WEB_REPO_PATH/.git"
+    git init &>/dev/null || error-exit "Failed, could not initialize git"
+    git add . &>/dev/null || error-exit "Failed, could not add files to git"
+    git commit -m 'Initial commit' &>/dev/null || error-exit "Failed, could not commit to git"
+    create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $WEB_REPO || error-exit "Failed, could not create https://github.com/$ORGANIZATION/$WEB_REPO"
+    git remote add origin git@github.com:$ORGANIZATION/$WEB_REPO.git &>/dev/null || error-exit "Failed, could not set repository origin"
+    git push -u origin master &>/dev/null || error-exit "Failed, could not push to https://github.com/$ORGANIZATION/$WEB_REPO"
+    echo "OK"
+
+    echo -n "  ==> Creating and changing directory to $PROJECT_PATH... "
+    mkdir $PROJECT_PATH &>/dev/null || error-exit "Failed, could not create $PROJECT_PATH"
+    cd $PROJECT_PATH &>/dev/null || error-exit "Failed, could not change directory"
+    echo "OK"
+
+    echo -n "  ==> Cloning $M2_CLEAN/docker* files from GitHub... "
     M2_CLEAN_FILES=( "docker-compose.yml" "docker-cloud.yml" ".env" )
     for FILE in "${M2_CLEAN_FILES[@]}"; do
-        get-github-file $GITHUB_TOKEN $ORGANIZATION "m2-clean" "master" $FILE || error-exit "Failed, could not fetch remote $FILE"
-        replace-string-in-file $FILE "m2-clean" $PROJECT || error-exit "Failed, could not replace \"clean\" with \"$PROJECT\" in $FILE"
+        get-github-file $GITHUB_TOKEN $ORGANIZATION "$M2_CLEAN" "master" $FILE || error-exit "Failed, could not fetch remote $FILE"
+        replace-string-in-file $FILE "$M2_CLEAN" $PROJECT || error-exit "Failed, could not replace \"$M2_CLEAN\" with \"$PROJECT\" in $FILE"
     done
     echo "OK"
 
@@ -131,7 +163,7 @@ function m2-create-project() {
     echo "OK"
 
     echo -n "  ==> Creating GitHub repository... "
-    create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $PROJECT || error-exit "Failed, could not create repo'"
+    create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $PROJECT || error-exit "Failed, could not create https://github.com/$ORGANIZATION/$PROJECT"
     echo "OK"
 
     echo -n "  ==> Adding files to GitHub repository... "
@@ -144,5 +176,6 @@ function m2-create-project() {
 
     echo "The new repositories are:"
     echo "  ==> https://github.com/$ORGANIZATION/$PROJECT"
+    echo "  ==> https://github.com/$ORGANIZATION/$WEB_REPO"
     echo "DONE"
 }
