@@ -117,24 +117,26 @@ function m2-create-project() {
 
     echo -n "  ==> Validating that GitHub repositories don't exist... "
     ORGANIZATION="pivulic"
-    is-github-repo $ORGANIZATION $PROJECT && error-exit "Failed, https://github.com/$ORGANIZATION/$PROJECT already exist"
-    is-github-repo $ORGANIZATION $WEB_REPO && error-exit "Failed, https://github.com/$ORGANIZATION/$WEB_REPO already exist"
+    PROJECT_REPO_URL="https://github.com/$ORGANIZATION/$PROJECT"
+    WEB_REPO_URL="https://github.com/$ORGANIZATION/$WEB_REPO"
+    is-github-repo $ORGANIZATION $PROJECT && error-exit "Failed, $PROJECT_REPO_URL already exist"
+    is-github-repo $ORGANIZATION $WEB_REPO && error-exit "Failed, $WEB_REPO_URL already exist"
     echo "OK"
 
     echo -n "  ==> Validating Magento version... "
     VERSION=$(validate-magento-version $VERSION) || error-exit "Failed, please specify 'community-edition' or 'enterprise-edition'"
     echo "OK"
 
-    echo -n "  ==> Cloning https://github.com/$ORGANIZATION/$M2_CLEAN_WEB to https://github.com/$ORGANIZATION/$WEB_REPO... "
+    echo -n "  ==> Cloning https://github.com/$ORGANIZATION/$M2_CLEAN_WEB to $WEB_REPO_URL... "
     git clone "git@github.com:$ORGANIZATION/$M2_CLEAN_WEB.git" $WEB_REPO &>/dev/null || error-exit "Failed, could not clone"
     cd $WEB_REPO_PATH &>/dev/null || error-exit "Failed, could not change directory to $WEB_REPO_PATH"
     rm -rf .git || error-exit "Failed, could not remove $WEB_REPO_PATH/.git"
     git init &>/dev/null || error-exit "Failed, could not initialize git"
     git add . &>/dev/null || error-exit "Failed, could not add files to git"
     git commit -m 'Initial commit' &>/dev/null || error-exit "Failed, could not commit to git"
-    create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $WEB_REPO || error-exit "Failed, could not create https://github.com/$ORGANIZATION/$WEB_REPO"
+    create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $WEB_REPO || error-exit "Failed, could not create $WEB_REPO_URL"
     git remote add origin git@github.com:$ORGANIZATION/$WEB_REPO.git &>/dev/null || error-exit "Failed, could not set repository origin"
-    git push -u origin master &>/dev/null || error-exit "Failed, could not push to https://github.com/$ORGANIZATION/$WEB_REPO"
+    git push -u origin master &>/dev/null || error-exit "Failed, could not push to $WEB_REPO_URL"
     echo "OK"
 
     echo -n "  ==> Creating and changing directory to $PROJECT_PATH... "
@@ -163,7 +165,7 @@ function m2-create-project() {
     echo "OK"
 
     echo -n "  ==> Creating GitHub repository... "
-    create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $PROJECT || error-exit "Failed, could not create https://github.com/$ORGANIZATION/$PROJECT"
+    create-github-repository $GITHUB_USERNAME $GITHUB_TOKEN $PROJECT || error-exit "Failed, could not create $PROJECT_REPO_URL"
     echo "OK"
 
     echo -n "  ==> Adding files to GitHub repository... "
@@ -171,11 +173,11 @@ function m2-create-project() {
     git add . &>/dev/null || error-exit "Failed, could not add files to git"
     git commit -m 'Initial commit' &>/dev/null || error-exit "Failed, could not commit to git"
     git remote add origin git@github.com:$ORGANIZATION/$PROJECT.git &>/dev/null || error-exit "Failed, could not set repository origin"
-    git push -u origin master &>/dev/null || error-exit "Failed, could not push to repository"
+    git push -u origin master &>/dev/null || error-exit "Failed, could not push to $PROJECT_REPO_URL"
     echo "OK"
 
     echo "The new repositories are:"
-    echo "  ==> https://github.com/$ORGANIZATION/$PROJECT"
-    echo "  ==> https://github.com/$ORGANIZATION/$WEB_REPO"
+    echo "  ==> $PROJECT_REPO_URL"
+    echo "  ==> $WEB_REPO_URL"
     echo "DONE"
 }
