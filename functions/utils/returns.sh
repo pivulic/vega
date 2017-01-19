@@ -1,7 +1,15 @@
 #!/bin/sh
 
+function green-ok() {
+    GREEN='\033[0;32m'
+    NO_COLOR='\033[0m'
+    echo -e "${GREEN}OK${NO_COLOR}"
+}
+
 function error-exit() {
-    echo "$1" 1>&2
+    RED='\033[0;41m'
+    NO_COLOR='\033[0m'
+    echo -e "${RED}${1}${NO_COLOR}"
     kill -INT $$
 }
 
