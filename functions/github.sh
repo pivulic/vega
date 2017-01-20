@@ -131,6 +131,10 @@ function m2-create-project() {
     git clone "git@github.com:$ORGANIZATION/$M2_CLEAN_WEB.git" $WEB_REPO &>/dev/null || error-exit "Failed, could not clone"
     cd $WEB_REPO_PATH &>/dev/null || error-exit "Failed, could not change directory to $WEB_REPO_PATH"
     rm -rf .git || error-exit "Failed, could not remove $WEB_REPO_PATH/.git"
+    for FILE in $(find $WEB_REPO_PATH -type f); do
+        replace-string-in-file $FILE $M2_CLEAN_WEB $WEB_REPO || error-exit "Failed, could not replace \"$M2_CLEAN_WEB\" with \"$WEB_REPO\" in $FILE"
+        replace-string-in-file $FILE $M2_CLEAN $PROJECT || error-exit "Failed, could not replace \"$M2_CLEAN\" with \"$PROJECT\" in $FILE"
+    done
     git init &>/dev/null || error-exit "Failed, could not initialize git"
     git add . &>/dev/null || error-exit "Failed, could not add files to git"
     git commit -m 'Initial commit' &>/dev/null || error-exit "Failed, could not commit to git"
@@ -147,8 +151,8 @@ function m2-create-project() {
     echo -n "  ==> Cloning $M2_CLEAN/docker* files from GitHub... "
     M2_CLEAN_FILES=( "docker-compose.yml" "docker-cloud.yml" ".env" )
     for FILE in "${M2_CLEAN_FILES[@]}"; do
-        get-github-file $GITHUB_TOKEN $ORGANIZATION "$M2_CLEAN" "master" $FILE || error-exit "Failed, could not fetch remote $FILE"
-        replace-string-in-file $FILE "$M2_CLEAN" $PROJECT || error-exit "Failed, could not replace \"$M2_CLEAN\" with \"$PROJECT\" in $FILE"
+        get-github-file $GITHUB_TOKEN $ORGANIZATION $M2_CLEAN "master" $FILE || error-exit "Failed, could not fetch remote $FILE"
+        replace-string-in-file $FILE $M2_CLEAN $PROJECT || error-exit "Failed, could not replace \"$M2_CLEAN\" with \"$PROJECT\" in $FILE"
     done
     green-ok
 
