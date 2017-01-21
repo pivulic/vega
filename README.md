@@ -22,9 +22,11 @@ Command | Description
 --- | ---
 `bash-reload` | Reload ~/.bash_profile
 `d-composer` | Run Composer through the [Composer container](https://hub.docker.com/r/library/composer/)
+`dangling-images` | Show dangling (`<none>:<none>`) Docker images
 `dinghy-env` | Set [Dinghy](https://github.com/codekitchen/dinghy) environment variables
 `m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
 `q` | Change directory to /var/www
+`rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
 `vega-update` | Update this repository to latest version
 
 ## Run Tests
