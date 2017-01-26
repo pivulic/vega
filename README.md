@@ -25,9 +25,11 @@ Command | Description
 `dangling-images` | Show dangling (`<none>:<none>`) Docker images
 `dinghy-env` | Set [Dinghy](https://github.com/codekitchen/dinghy) environment variables
 `docker-rm-all [except container_name]` | Remove all Docker containers, e.g: <br> `docker-rm-all` <br> `docker-rm-all dinghy_http_proxy`
+`m2` | Run `bin/magento` CLI
 `m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
-`m2-web-install` | Run `web-install` Docker Compose service
-`m2-web-up` | Create/(re)start `web` Docker Compose service
+`m2-install` | Run `bin/magento setup:install` installer
+`m2-install-sampledata` | Install Sample Data
+`m2-up` | Create/(re)start `web` Docker Compose service
 `q` | Change directory to /var/www
 `rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
 `vega-update` | Update this repository to latest version
