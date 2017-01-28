@@ -26,6 +26,7 @@ Command | Description
 `dinghy-env` | Set [Dinghy](https://github.com/codekitchen/dinghy) environment variables
 `docker-rm-all [except container_name]` | Remove all Docker containers, e.g: <br> `docker-rm-all` <br> `docker-rm-all dinghy_http_proxy`
 `m2` | Run `bin/magento` CLI
+`m2-build-artifact` | Create & copy a m2-html.tar.gz artifact to local
 `m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
 `m2-install` | Run `bin/magento setup:install` installer
 `m2-install-sampledata` | Install Sample Data
