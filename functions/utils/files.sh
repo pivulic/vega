@@ -13,3 +13,8 @@ function replace-string-in-file() {
     sed -i -e "s/$ORIGINAL_STRING/$NEW_STRING/g" $FILE
     rm -f "$FILE-e"
 }
+
+function get-current-directory-name() {
+    DIRECTORY=${PWD##*/}
+    echo $DIRECTORY
+}

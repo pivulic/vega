@@ -13,3 +13,8 @@ load $(pwd)/functions/utils/files.sh
     run get-file-name-from-path "$FILE_PATH"
     [ "$output" == "docker-compose.yml" ]
 }
+
+@test "Test get-current-directory-name should return 'vega' - if path is '/Users/pablo/vega/'" {
+    run get-current-directory-name
+    [ "$output" == "vega" ]
+}
