@@ -38,9 +38,9 @@ Command | Description
 ## Bash Prompt
 To quickly make your Bash prompt more useful and fancy (similar to a [PS1 generator](http://bashrcgenerator.com)), add the following line to your `~/.bash_profile` by running:
 
-    ```
-    echo 'source ~/vega/functions/bash-prompt.sh' >> ~/.bash_profile
-    ```
+```
+echo 'source ~/vega/functions/bash-prompt.sh' >> ~/.bash_profile
+```
 
 ## Run Tests
 Bash units are tested with [Bats](https://github.com/sstephenson/bats) by running:
