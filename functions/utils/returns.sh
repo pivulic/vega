@@ -5,14 +5,14 @@ function green-ok() {
     if [ -z "$MESSAGE" ]; then
         MESSAGE="OK"
     fi
-    GREEN='\033[0;32m'
-    NO_COLOR='\033[0m'
+    local GREEN='\033[0;32m'
+    local NO_COLOR='\033[0m'
     echo -e "${GREEN}${MESSAGE}${NO_COLOR}"
 }
 
 function error-exit() {
-    RED='\033[0;41m'
-    NO_COLOR='\033[0m'
+    local RED='\033[0;41m'
+    local NO_COLOR='\033[0m'
     echo -e "${RED}${1}${NO_COLOR}"
     kill -INT $$
 }
