@@ -12,4 +12,4 @@ function get-hg-branch() {
     hg branch 2> /dev/null | sed -e "s/\(.*\)/ (\1)/"
 }
 
-export PS1="${GREEN}\u@\h${NO_COLOR}:${BLUE}\w${YELLOW}\$(get-git-branch)\$(get-hg-branch)${NO_COLOR}\\$ "
+export PS1="${GREEN}\u${NO_COLOR}:${BLUE}\w${YELLOW}\$(get-git-branch)\$(get-hg-branch)${NO_COLOR}\\$ "
