@@ -23,6 +23,7 @@ Command | Description
 `bash-reload` | Reload ~/.bash_profile
 `d-composer` | Run Composer through the [Composer container](https://hub.docker.com/r/library/composer/)
 `dangling-images` | Show dangling (`<none>:<none>`) Docker images
+`dangling-volumes` | Show orphan Docker volumes
 `dinghy-env` | Set [Dinghy](https://github.com/codekitchen/dinghy) environment variables
 `docker-rm-all [except container_name]` | Remove all Docker containers, e.g: <br> `docker-rm-all` <br> `docker-rm-all dinghy_http_proxy`
 `m2` | Run `bin/magento` CLI
@@ -33,6 +34,7 @@ Command | Description
 `m2-up` | Create/(re)start `web` Docker Compose service
 `q` | Change directory to /var/www
 `rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
+`rm-dangling-volumes` | Remove dangling/orphan Docker volumes
 `vega-update` | Update this repository to latest version
 
 ## Bash Prompt
