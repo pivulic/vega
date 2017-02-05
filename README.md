@@ -25,7 +25,6 @@ Command | Description
 `dangling-images` | Show dangling (`<none>:<none>`) Docker images
 `dangling-volumes` | Show orphan Docker volumes
 `dinghy-env` | Set [Dinghy](https://github.com/codekitchen/dinghy) environment variables
-`docker-rm-all [except container_name]` | Remove all Docker containers, e.g: <br> `docker-rm-all` <br> `docker-rm-all dinghy_http_proxy`
 `m2` | Run `bin/magento` CLI
 `m2-build-artifact` | Create & copy a m2-html.tar.gz artifact to local
 `m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
@@ -33,6 +32,7 @@ Command | Description
 `m2-install-sampledata` | Install Sample Data
 `m2-up` | Create/(re)start `web` Docker Compose service
 `q` | Change directory to /var/www
+`rm-all-containers [except container_name]` | Remove all Docker containers, e.g: <br> `rm-all-containers` <br> `rm-all-containers dinghy_http_proxy`
 `rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
 `rm-dangling-volumes` | Remove dangling/orphan Docker volumes
 `vega-update` | Update this repository to latest version
