@@ -16,4 +16,4 @@ alias q='cd /var/www'
 alias rm-all-containers=docker-rm-all-containers
 alias rm-dangling-images='dangling-images | xargs docker rmi -f'
 alias rm-dangling-volumes='docker volume rm $(dangling-volumes)'
-alias vega-update='cd ~/vega && git pull -u && bash-reload'
+alias vega-update='cd ~/vega && git pull && bash-reload'
