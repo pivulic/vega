@@ -3,7 +3,7 @@
 GREEN="\[\033[38;5;10m\]"
 BLUE="\[\033[38;5;33m\]"
 YELLOW="\[\033[0;33m\]"
-NO_COLOR="\033[0m"
+NO_COLOR="\[\033[0m\]"
 
 function get-git-branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
