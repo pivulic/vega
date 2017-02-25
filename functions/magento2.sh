@@ -46,7 +46,7 @@ function m2-create-project() {
     fi
 
     echo -n "  ==> Validating current directory... "
-    [ "$PWD" == "/var/www" ] || error-exit "Failed, please change directory: cd /var/www/"
+    [ "$PWD" == "~/projects" ] || error-exit "Failed, please change directory: cd ~/projects"
     green-ok
 
     echo -n "  ==> Validating that local directories don't exist... "
