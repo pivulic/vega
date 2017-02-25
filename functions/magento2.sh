@@ -135,9 +135,19 @@ function m2-create-project() {
 }
 
 function m2-build-artifact() {
+    local HOSTNAME="$1"
+    local PROJECT_ID="$2"
+
+    if [ -z "$HOSTNAME" ]; then
+        error-exit "Failed, missing 1st argument (Google Cloud hostname)"
+    fi
+
+    if [ -z "$PROJECT_ID" ]; then
+        error-exit "Failed, missing 2nd argument (Google Cloud project ID)"
+    fi
+
     REPO=$(get-current-directory-name)
-    ORGANIZATION='pivulic'
-    docker run -it -v ~/.composer/:/var/www/.composer -v ~/.gitconfig:/var/www/.gitconfig --name $REPO $ORGANIZATION/$REPO:default /bin/bash /usr/local/bin/build-magento
+    docker run -it -v ~/.composer/:/var/www/.composer -v ~/.gitconfig:/var/www/.gitconfig --name $REPO $HOSTNAME/$PROJECT_ID/$REPO:default /bin/bash /usr/local/bin/build-magento
 
     echo "  ==> Copying build artifact to local directory... "
     docker cp $REPO:/var/www/html/m2-html.tar.gz ./ || error-exit "Failed, could not copy m2-html.tar.gz"
