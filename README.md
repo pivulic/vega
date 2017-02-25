@@ -31,7 +31,7 @@ Command | Description
 `m2-install` | Run `bin/magento setup:install` installer
 `m2-install-sampledata` | Install Sample Data
 `m2-up` | Create/(re)start `web` Docker Compose service
-`q` | Change directory to /var/www
+`q` | Change directory to ~/projects/
 `rm-all-containers [except container_name]` | Remove all Docker containers, e.g: <br> `rm-all-containers` <br> `rm-all-containers dinghy_http_proxy`
 `rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
 `rm-dangling-volumes` | Remove dangling/orphan Docker volumes
