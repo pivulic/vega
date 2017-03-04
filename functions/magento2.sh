@@ -45,10 +45,6 @@ function m2-create-project() {
         green-ok
     fi
 
-    echo -n "  ==> Validating current directory... "
-    [ "$PWD" == "~/projects" ] || error-exit "Failed, please change directory: cd ~/projects"
-    green-ok
-
     echo -n "  ==> Validating that local directories don't exist... "
     WEB_REPO="$PROJECT-web"
     PROJECT_PATH="$PWD/$PROJECT"
@@ -97,7 +93,7 @@ function m2-create-project() {
     green-ok
 
     echo -n "  ==> Cloning $M2_CLEAN/docker* files from GitHub... "
-    M2_CLEAN_FILES=( "docker-compose.yml" "docker-cloud.yml" ".env" )
+    M2_CLEAN_FILES=( "docker-compose.yml" ".env" )
     for FILE in "${M2_CLEAN_FILES[@]}"; do
         get-github-file $GITHUB_TOKEN $ORGANIZATION $M2_CLEAN "master" $FILE || error-exit "Failed, could not fetch remote $FILE"
         replace-string-in-file $FILE $M2_CLEAN $PROJECT || error-exit "Failed, could not replace \"$M2_CLEAN\" with \"$PROJECT\" in $FILE"
@@ -149,7 +145,7 @@ function m2-build-artifact() {
     REPO=$(get-current-directory-name)
     docker run -it -v ~/.composer/:/var/www/.composer -v ~/.gitconfig:/var/www/.gitconfig --name $REPO $HOSTNAME/$PROJECT_ID/$REPO:default /bin/bash /usr/local/bin/build-magento
 
-    echo "  ==> Copying build artifact to local directory... "
+    echo -n "  ==> Copying build artifact to local directory... "
     docker cp $REPO:/var/www/html/m2-html.tar.gz ./ || error-exit "Failed, could not copy m2-html.tar.gz"
     green-ok
 
