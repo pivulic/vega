@@ -8,8 +8,9 @@ function remove-container() {
 }
 
 function docker-rm-all-containers() {
-    local CONTAINER_NAME="$1"
-    docker rm --force "$(docker ps -a | grep -v "$CONTAINER_NAME" | cut -d ' ' -f1)"
+    local KEEP_CONTAINER="$1"
+    CONTAINERS_TO_DELETE="$(docker ps -a | grep -v $KEEP_CONTAINER | cut -d ' ' -f1)"
+    docker rm --force $CONTAINERS_TO_DELETE
 }
 
 function docker-exec() {
