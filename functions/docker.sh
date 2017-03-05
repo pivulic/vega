@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 function remove-container() {
     local CONTAINER_NAME="$1"
@@ -9,5 +9,5 @@ function remove-container() {
 
 function docker-rm-all-containers() {
     local CONTAINER_NAME="$1"
-    docker rm --force $(docker ps -a | grep -v "$CONTAINER_NAME" | cut -d ' ' -f1)
+    docker rm --force "$(docker ps -a | grep -v "$CONTAINER_NAME" | cut -d ' ' -f1)"
 }
