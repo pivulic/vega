@@ -11,3 +11,8 @@ function docker-rm-all-containers() {
     local CONTAINER_NAME="$1"
     docker rm --force "$(docker ps -a | grep -v "$CONTAINER_NAME" | cut -d ' ' -f1)"
 }
+
+function docker-exec() {
+    local CONTAINER_NAME="$1"
+    docker exec -it $CONTAINER_NAME bash
+}
