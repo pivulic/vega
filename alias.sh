@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-BASE=$(dirname $BASH_SOURCE[0])
+BASE=$(dirname ${BASH_SOURCE[0]})
+# shellcheck source=${BASE}/functions/magento2.sh
 source ${BASE}/functions/magento2.sh
 
 alias bash-reload='source ~/.bash_profile'
