@@ -1,10 +1,15 @@
-#!/bin/sh
+#!/bin/bash
 
-BASE=$(dirname $BASH_SOURCE[0])
+BASE=$(dirname ${BASH_SOURCE[0]})
+# shellcheck source=${BASE}/docker.sh
 source ${BASE}/docker.sh
+# shellcheck source=${BASE}/github.sh
 source ${BASE}/github.sh
+# shellcheck source=${BASE}/utils/files.sh
 source ${BASE}/utils/files.sh
+# shellcheck source=${BASE}/utils/returns.sh
 source ${BASE}/utils/returns.sh
+# shellcheck source=${BASE}/utils/strings.sh
 source ${BASE}/utils/strings.sh
 
 function validate-magento-version() {
@@ -133,6 +138,7 @@ function m2-create-project() {
 function m2-build-artifact() {
     local HOSTNAME="$1"
     local PROJECT_ID="$2"
+    local REPO="$3"
 
     if [ -z "$HOSTNAME" ]; then
         error-exit "Failed, missing 1st argument (Google Cloud hostname)"
@@ -142,7 +148,10 @@ function m2-build-artifact() {
         error-exit "Failed, missing 2nd argument (Google Cloud project ID)"
     fi
 
-    REPO=$(get-current-directory-name)
+    if [ -z "$REPO" ]; then
+        error-exit "Failed, missing 3rd argument (Google Cloud repo name)"
+    fi
+
     docker run -it -v ~/.composer/:/var/www/.composer -v ~/.gitconfig:/var/www/.gitconfig --name $REPO $HOSTNAME/$PROJECT_ID/$REPO:default /bin/bash /usr/local/bin/build-magento
 
     echo -n "  ==> Copying build artifact to local directory... "
