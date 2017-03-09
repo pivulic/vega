@@ -24,7 +24,7 @@ Command | Description
 `d-composer` | Run Composer through the [Composer container](https://hub.docker.com/r/library/composer/)
 `dangling-images` | Show dangling (`<none>:<none>`) Docker images
 `dangling-volumes` | Show orphan Docker volumes
-`dinghy-env` | Set [Dinghy](https://github.com/codekitchen/dinghy) environment variables
+`docker-env` | Set `docker-machine` environment variables
 `m2` | Run `bin/magento` CLI
 `m2-build-artifact` | Create & copy a m2-html.tar.gz artifact to local
 `m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
