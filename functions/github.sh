@@ -1,8 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 
-BASE=$(dirname $BASH_SOURCE[0])
+BASE=$(dirname ${BASH_SOURCE[0]})
+# shellcheck source=${BASE}/utils/files.sh
 source ${BASE}/utils/files.sh
+# shellcheck source=${BASE}/utils/returns.sh
 source ${BASE}/utils/returns.sh
+# shellcheck source=${BASE}/utils/strings.sh
 source ${BASE}/utils/strings.sh
 
 function get-github-username() {
@@ -47,8 +50,7 @@ function get-github-file() {
     local BRANCH="$4"
     local FILE_PATH="$5"
 
-    FILE_NAME=$(get-file-name-from-path $FILE_PATH)
-    curl -H "Authorization: token $GITHUB_TOKEN" -o $FILE_NAME https://raw.githubusercontent.com/$ORGANIZATION/$REPO/$BRANCH/$FILE_PATH &>/dev/null
+    curl -H "Authorization: token $GITHUB_TOKEN" -o $FILE_PATH https://raw.githubusercontent.com/$ORGANIZATION/$REPO/$BRANCH/$FILE_PATH &>/dev/null
 }
 
 function create-github-repository() {

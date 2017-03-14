@@ -98,7 +98,8 @@ function m2-create-project() {
     green-ok
 
     echo -n "  ==> Cloning $M2_CLEAN/docker* files from GitHub... "
-    M2_CLEAN_FILES=( "docker-compose.yml" ".env" )
+    M2_CLEAN_FILES=( "docker-compose.yml" "docker-sync.yml" ".env" ".gitignore" "kubernetes/database.yaml" "kubernetes/volumes.yaml" "kubernetes/web-install.yaml" "kubernetes/web.yaml" )
+    mkdir "kubernetes" &>/dev/null || error-exit "Failed, could not create kubernetes/"
     for FILE in "${M2_CLEAN_FILES[@]}"; do
         get-github-file $GITHUB_TOKEN $ORGANIZATION $M2_CLEAN "master" $FILE || error-exit "Failed, could not fetch remote $FILE"
         replace-string-in-file $FILE $M2_CLEAN $PROJECT || error-exit "Failed, could not replace \"$M2_CLEAN\" with \"$PROJECT\" in $FILE"
