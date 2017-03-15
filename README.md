@@ -36,7 +36,8 @@ Command | Description
 `rm-all-containers [except container_name]` | Remove all Docker containers, e.g: <br> `rm-all-containers` <br> `rm-all-containers dinghy_http_proxy`
 `rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
 `rm-dangling-volumes` | Remove dangling/orphan Docker volumes
-`ssh-docker` | SSH into a docker container
+`ssh-docker` | SSH into a Docker container
+`ssh-kubectl` | SSH into a Kubernetes pod
 `vega-update` | Update this repository to latest version
 
 ## Bash Prompt

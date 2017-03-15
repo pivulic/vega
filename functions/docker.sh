@@ -17,3 +17,8 @@ function docker-exec() {
     local CONTAINER_NAME="$1"
     docker exec -it $CONTAINER_NAME bash
 }
+
+function kubectl-exec() {
+    local CONTAINER_NAME="$1"
+    kubectl exec -it $CONTAINER_NAME bash
+}
