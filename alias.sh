@@ -9,7 +9,7 @@ alias d-composer='remove-container composer && docker run --interactive --tty --
 alias dangling-images='docker images -qf dangling=true'
 alias dangling-volumes='docker volume ls -qf dangling=true'
 alias docker-env='eval $(docker-machine env default)'
-alias m2='docker-compose exec web ./bin/magento'
+alias m2='docker-compose exec web /var/www/html/bin/magento'
 alias m2-composer='docker-compose exec web composer'
 alias m2-install='docker-compose run --rm web-install'
 alias m2-install-sampledata='docker-compose run --rm web /usr/local/bin/sample-data'
