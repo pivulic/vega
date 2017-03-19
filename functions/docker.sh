@@ -15,10 +15,12 @@ function docker-rm-all-containers() {
 
 function docker-exec() {
     local CONTAINER_NAME="$1"
-    docker exec -it $CONTAINER_NAME bash
+    local COMMAND="$2"
+    docker exec -it $CONTAINER_NAME bash $COMMAND
 }
 
 function kubectl-exec() {
     local CONTAINER_NAME="$1"
-    kubectl exec -it $CONTAINER_NAME bash
+    local COMMAND="$2"
+    kubectl exec -it $CONTAINER_NAME bash $COMMAND
 }

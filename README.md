@@ -25,6 +25,8 @@ Command | Description
 `dangling-images` | Show dangling (`<none>:<none>`) Docker images
 `dangling-volumes` | Show orphan Docker volumes
 `docker-env` | Set `docker-machine` environment variables
+`docker-exec` | Execute command inside Docker container, e.g: <br> `docker-exec m2clean_web_1 install`
+`kubectl-exec` | Execute command inside Kubernetes pod, e.g: <br> `kubectl-exec m2clean_web_1 install`
 `m2` | Run `bin/magento` CLI
 `m2-build-artifact` | Create & copy a m2-html.tar.gz artifact to local
 `m2-composer` | Execute composer command in `web` Docker Composer service
@@ -36,8 +38,8 @@ Command | Description
 `rm-all-containers [except container_name]` | Remove all Docker containers, e.g: <br> `rm-all-containers` <br> `rm-all-containers dinghy_http_proxy`
 `rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
 `rm-dangling-volumes` | Remove dangling/orphan Docker volumes
-`ssh-docker` | SSH into a Docker container
-`ssh-kubectl` | SSH into a Kubernetes pod
+`ssh-docker` | SSH into a Docker container, e.g: <br> `ssh-docker m2clean_web_1`
+`ssh-kubectl` | SSH into a Kubernetes pod, e.g: <br> `ssh-kubectl m2clean_web_1`
 `vega-update` | Update this repository to latest version
 
 ## Bash Prompt
