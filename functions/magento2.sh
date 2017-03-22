@@ -155,8 +155,8 @@ function m2-build-artifact() {
 
     docker run -it -v ~/.composer/:/var/www/.composer -v ~/.gitconfig:/var/www/.gitconfig --name $REPO $HOSTNAME/$PROJECT_ID/$REPO:default /bin/bash /usr/local/bin/build-magento
 
-    echo -n "  ==> Copying build artifact to local directory... "
-    docker cp $REPO:/var/www/html/m2-html.tar.gz ./ || error-exit "Failed, could not copy m2-html.tar.gz"
+    echo -n "  ==> Copying build-artifact.tar.gz to local directory... "
+    docker cp $REPO:/var/www/html/build-artifact.tar.gz ./ || error-exit "Failed, could not copy build-artifact.tar.gz"
     green-ok
 
     docker rm --force --volumes $REPO &>/dev/null
