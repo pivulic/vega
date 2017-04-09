@@ -141,6 +141,9 @@ function m2-build-artifact() {
     local PROJECT_ID="$2"
     local REPO="$3"
 
+    HTDOCS_PATH=/var/www/html/htdocs
+    DOCKER_COMPOSE_PATH=../$PROJECT_ID/docker-compose.yml
+
     if [ -z "$HOSTNAME" ]; then
         error-exit "Failed, missing 1st argument (Google Cloud hostname)"
     fi
@@ -153,10 +156,10 @@ function m2-build-artifact() {
         error-exit "Failed, missing 3rd argument (Google Cloud repo name)"
     fi
 
-    docker run -it -v ~/.composer/:/var/www/.composer -v ~/.gitconfig:/var/www/.gitconfig --name $REPO $HOSTNAME/$PROJECT_ID/$REPO:default /bin/bash /usr/local/bin/build-magento
+    docker-compose --file $DOCKER_COMPOSE_PATH run --name $REPO web build-magento
 
     echo -n "  ==> Copying build-artifact.tar.gz to local directory... "
-    docker cp $REPO:/var/www/html/build-artifact.tar.gz ./ || error-exit "Failed, could not copy build-artifact.tar.gz"
+    docker cp $REPO:$HTDOCS_PATH/build-artifact.tar.gz ./ || error-exit "Failed, could not copy build-artifact.tar.gz"
     green-ok
 
     docker rm --force --volumes $REPO &>/dev/null
