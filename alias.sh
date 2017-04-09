@@ -12,7 +12,7 @@ alias docker-env='eval $(docker-machine env default)'
 alias m2='docker-compose exec web /var/www/html/htdocs/bin/magento'
 alias m2-composer='docker-compose exec web composer --working-dir=/var/www/html/htdocs'
 alias m2-install='docker-compose run --rm web install'
-alias m2-install-sampledata='docker-compose run --rm web /usr/local/bin/sample-data'
+alias m2-install-sampledata='docker-compose run --rm web sample-data'
 alias m2-up='docker-compose up -d web'
 alias q='mkdir -p ~/projects && cd ~/projects'
 alias rm-all-containers=docker-rm-all-containers
