@@ -40,6 +40,7 @@ Command | Description
 `rm-dangling-volumes` | Remove dangling/orphan Docker volumes
 `ssh-docker` | SSH into a Docker container, e.g: <br> `ssh-docker m2clean_web_1`
 `ssh-kubectl` | SSH into a Kubernetes pod, e.g: <br> `ssh-kubectl m2clean_web_1`
+`ssh-key-copy` | Copy `~/.ssh/id_rsa.pub` to clipboard
 `vega-update` | Update this repository to latest version
 
 ## Bash Prompt
