@@ -28,9 +28,9 @@ Command | Description
 `docker-exec` | Execute command inside Docker container, e.g: <br> `docker-exec m2clean_web_1 install`
 `m2` | Run `bin/magento` CLI
 `m2-build-artifact` | Create & copy a m2-html.tar.gz artifact to local
-`m2-composer` | Execute composer command in `web` Docker Composer service
 `m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
 `m2-install-sampledata` | Install Sample Data
+`web-composer` | Execute composer command in `web` Docker Composer service
 `m2-up` | Create/(re)start `web` Docker Compose service
 `q` | Change directory to ~/projects/
 `rm-all-containers [except container_name]` | Remove all Docker containers, e.g: <br> `rm-all-containers` <br> `rm-all-containers dinghy_http_proxy`
