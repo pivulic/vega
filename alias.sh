@@ -18,5 +18,6 @@ alias rm-all-containers=docker-rm-all-containers
 alias rm-dangling-images='dangling-images | xargs docker rmi -f'
 alias rm-dangling-volumes='docker volume rm $(dangling-volumes)'
 alias ssh-docker=docker-exec
+alias ssh-k8=kubectl-exec
 alias ssh-key-copy='cat ~/.ssh/id_rsa.pub | pbcopy'
 alias vega-update='cd ~/vega && git pull && bash-reload'

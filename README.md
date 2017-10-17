@@ -26,6 +26,7 @@ Command | Description
 `dangling-volumes` | Show orphan Docker volumes
 `docker-env` | Set `docker-machine` environment variables
 `docker-exec` | Execute command inside Docker container, e.g: <br> `docker-exec m2clean_web_1 install`
+`kubectl-exec` | Execute command inside Kubernetes pod, e.g: <br> `kubectl-exec web-1536742303-r0n4f install`
 `m2` | Run `bin/magento` CLI
 `m2-build-artifact` | Create & copy a m2-html.tar.gz artifact to local
 `m2-create-project <project> <version> <release>` | Create a new M2 project, e.g: <br> `m2-create-project ikea CE 2.1.3`
@@ -37,6 +38,7 @@ Command | Description
 `rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
 `rm-dangling-volumes` | Remove dangling/orphan Docker volumes
 `ssh-docker` | SSH into a Docker container, e.g: <br> `ssh-docker m2clean_web_1`
+`ssh-k8` | SSH into a Kubernetes pod, e.g: <br> `ssh-k8 web-1536742303-r0n4f`
 `ssh-key-copy` | Copy `~/.ssh/id_rsa.pub` to clipboard
 `vega-update` | Update this repository to latest version
 

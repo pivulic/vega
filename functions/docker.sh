@@ -18,3 +18,9 @@ function docker-exec() {
     local COMMAND="$2"
     docker-compose exec $SERVICE_NAME bash $COMMAND
 }
+
+function kubectl-exec() {
+    local CONTAINER_NAME="$1"
+    local COMMAND="$2"
+    kubectl exec -it $CONTAINER_NAME bash $COMMAND
+}
