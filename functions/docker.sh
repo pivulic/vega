@@ -32,5 +32,5 @@ function docker-images-by-name() {
 
 function rm-docker-images-by-name() {
     local REPOSITORY_NAME="$1"
-    docker-images-by-name $REPOSITORY_NAME | xargs docker rmi -f
+    docker-images-by-name $REPOSITORY_NAME | xargs docker rmi
 }
