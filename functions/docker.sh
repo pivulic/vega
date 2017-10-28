@@ -24,3 +24,13 @@ function kubectl-exec() {
     local COMMAND="$2"
     kubectl exec -it $CONTAINER_NAME bash $COMMAND
 }
+
+function docker-images-by-name() {
+    local REPOSITORY_NAME="$1"
+    docker images | grep "^$REPOSITORY_NAME" | awk '{print $3}'
+}
+
+function rm-docker-images-by-name() {
+    local REPOSITORY_NAME="$1"
+    docker-images-by-name $REPOSITORY_NAME | xargs docker rmi -f
+}

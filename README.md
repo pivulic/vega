@@ -26,6 +26,7 @@ Command | Description
 `dangling-volumes` | Show orphan Docker volumes
 `docker-env` | Set `docker-machine` environment variables
 `docker-exec` | Execute command inside Docker container, e.g: <br> `docker-exec m2clean_web_1 install`
+`docker-images-by-name` | Show Docker Image ID by name, e.g: <br> `docker-images-by-name vendor/name`
 `kubectl-exec` | Execute command inside Kubernetes pod, e.g: <br> `kubectl-exec web-1536742303-r0n4f install`
 `m2` | Run `bin/magento` CLI
 `m2-build-artifact` | Create & copy a m2-html.tar.gz artifact to local
@@ -37,6 +38,7 @@ Command | Description
 `rm-all-containers [except container_name]` | Remove all Docker containers, e.g: <br> `rm-all-containers` <br> `rm-all-containers dinghy_http_proxy`
 `rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
 `rm-dangling-volumes` | Remove dangling/orphan Docker volumes
+`rm-docker-images-by-name` | Remove Docker images by name, e.g: <br> `rm-docker-images-by-name vendor/name`
 `ssh-docker` | SSH into a Docker container, e.g: <br> `ssh-docker m2clean_web_1`
 `ssh-k8` | SSH into a Kubernetes pod, e.g: <br> `ssh-k8 web-1536742303-r0n4f`
 `ssh-key-copy` | Copy `~/.ssh/id_rsa.pub` to clipboard
