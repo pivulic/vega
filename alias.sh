@@ -21,3 +21,4 @@ alias ssh-docker=docker-exec
 alias ssh-k8=kubectl-exec
 alias ssh-key-copy='cat ~/.ssh/id_rsa.pub | pbcopy'
 alias vega-update='cd ~/vega && git pull && bash-reload'
+alias ll='ls -la'

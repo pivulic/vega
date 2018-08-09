@@ -43,6 +43,7 @@ Command | Description
 `ssh-k8` | SSH into a Kubernetes pod, e.g: <br> `ssh-k8 web-1536742303-r0n4f`
 `ssh-key-copy` | Copy `~/.ssh/id_rsa.pub` to clipboard
 `vega-update` | Update this repository to latest version
+`ll` | List all files and folders
 
 ## Bash Prompt
 To quickly make your Bash prompt more useful and fancy (similar to a [PS1 generator](http://bashrcgenerator.com)), add the following line to your `~/.bash_profile` by running:
