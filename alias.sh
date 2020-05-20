@@ -8,6 +8,8 @@ alias bash-reload='source ~/.bash_profile'
 alias d-composer='remove-container composer && docker run --interactive --tty --name composer --volume ~/.composer:/composer composer'
 alias dangling-images='docker images -qf dangling=true'
 alias dangling-volumes='docker volume ls -qf dangling=true'
+alias delete-evicted-pods-dev="kubectl get pods -n dev | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n dev"
+alias delete-evicted-pods-prod="kubectl get pods -n default | grep Evicted | awk '{print $1}' | xargs kubectl delete pod -n default"
 alias docker-env='eval $(docker-machine env default)'
 alias ll='ls -la'
 alias m2='docker-compose exec web /var/www/html/bin/magento'
