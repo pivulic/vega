@@ -9,6 +9,9 @@ NO_COLOR="\[\033[0m\]"
 function is-k8s-prod() {
     CONTEXT=$(kubectl config current-context)
     if [[ "$CONTEXT" == *"stocksholm_us"* ]]; then
+      echo "(k8s-legacy)"
+    fi
+    if [[ "$CONTEXT" == *"k8s-prod"* ]]; then
       echo "(k8s-prod)"
     fi
 }
