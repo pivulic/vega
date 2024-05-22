@@ -1,6 +1,4 @@
-#!/bin/bash
-
-BASE=$(dirname ${BASH_SOURCE[0]})
+#!/bin/zsh
 
 alias bash-reload='source ~/.bash_profile'
 alias dangling-images='docker images -qf dangling=true'
