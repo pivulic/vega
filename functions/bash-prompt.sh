@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/zsh
 
-GREEN="\[\033[38;5;10m\]"
-BLUE="\[\033[38;5;33m\]"
-RED="\[\033[38;5;9m\]"
-YELLOW="\[\033[0;33m\]"
-NO_COLOR="\[\033[0m\]"
+GREEN="%F{10}"
+BLUE="%F{33}"
+RED="%F{9}"
+YELLOW="%F{3}"
+NO_COLOR="%f"
 
 function is-k8s-prod() {
     CONTEXT=$(kubectl config current-context)
@@ -25,8 +25,14 @@ function has-svc-changes() {
         echo "!"
     fi
 }
+
 function get-git-branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
-export PS1="${GREEN}\u\$(is-k8s-dev)${RED}\$(is-k8s-prod)${NO_COLOR}:${BLUE}\w${RED}\$(has-svc-changes)${YELLOW}\$(get-git-branch)${NO_COLOR} $ "
+# Use $(...) syntax inside the prompt for Zsh
+autoload -Uz vcs_info
+precmd() {
+    PS1="${GREEN}%n$(is-k8s-dev)${RED}$(is-k8s-prod)${NO_COLOR}:${BLUE}%~${RED}$(has-svc-changes)${YELLOW}$(get-git-branch)${NO_COLOR} $ "
+}
+precmd
