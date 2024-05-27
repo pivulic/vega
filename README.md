@@ -28,7 +28,7 @@ Command | Description
 `rm-dangling-images` | Remove dangling (`<none>:<none>`) Docker images
 `rm-dangling-volumes` | Remove dangling/orphan Docker volumes
 `rm-docker-images-by-name` | Remove Docker images by name, e.g: <br> `rm-docker-images-by-name vendor/name`
-`ssh-key-copy` | Copy `~/.ssh/id_rsa.pub` to clipboard
+`ssh-key-copy` | Copy `~/.ssh/id_ed25519.pub` to clipboard
 `vega-update` | Update this repository to latest version
 `ll` | List all files and folders
 
