@@ -30,9 +30,15 @@ function get-git-branch() {
     git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
 
+function get-venv-name() {
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        echo "($(basename $VIRTUAL_ENV)) "
+    fi
+}
+
 # Use $(...) syntax inside the prompt for Zsh
 autoload -Uz vcs_info
 precmd() {
-    PS1="${GREEN}%n$(is-k8s-dev)${RED}$(is-k8s-prod)${NO_COLOR}:${BLUE}%~${RED}$(has-svc-changes)${YELLOW}$(get-git-branch)${NO_COLOR} $ "
+    PS1="$(get-venv-name)${GREEN}%n$(is-k8s-dev)${RED}$(is-k8s-prod)${NO_COLOR}:${BLUE}%~${RED}$(has-svc-changes)${YELLOW}$(get-git-branch)${NO_COLOR} $ "
 }
 precmd
